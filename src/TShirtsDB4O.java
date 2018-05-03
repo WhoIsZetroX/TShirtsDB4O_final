@@ -7,13 +7,10 @@ import java.util.function.Predicate;
 
 import javax.sound.midi.Soundbank;
 
-import Entities.Customer;
+import Entities.*;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
-
-import Entities.Article;
-import Entities.Order;
 
 /**
  * @author Joan Anton Perez Branya
@@ -55,23 +52,23 @@ public class TShirtsDB4O {
 			TSM.listOrders();//
 			TSM.listArticles();//
 			TSM.addArticle(7, "CALCETINES EJECUTIVOS 'JACKSON 3PK'", "gris", "45", 18.00);//
-            TSM.updatePriceArticle(7, 12.00);
+            TSM.updatePriceArticle(7, 12.00);//
 			TSM.llistaArticlesByName("CALCETINES EJECUTIVOS 'JACKSON 3PK'");//
 			TSM.deletingArticlesByName("POLO BÁSICO 'MANIA'");//
             TSM.deleteArticleById(7);//
 			TSM.listArticles();//
 			TSM.listCustomers();//
-			TSM.changeCreditCardToCustomer(1);
+        TSM.changeCreditCardToCustomer(1);
 			TSM.listCustomers();//
 			TSM.llistaCustomerByName("Laura");//
 			TSM.showOrdersByCustomerName("Laura");
 			TSM.showCreditCardByCustomerName("Laura");//
 			TSM.deleteCustomerbyId(2);//
-			TSM.retrieveOrderContentById_Order(2);
-			TSM.deleteOrderContentById_Order(2);
-			TSM.retrieveOrderContentById_Order(2);
+        TSM.retrieveOrderContentById_Order(2);
+        TSM.deleteOrderContentById_Order(2);
+        TSM.retrieveOrderContentById_Order(2);
 			TSM.listCustomers();//
-			TSM.clearDatabase();// Creo xd //
+        TSM.clearDatabase();// Creo xd //
 			TSM.listOrders();//
 
 		} finally {
@@ -101,7 +98,15 @@ public class TShirtsDB4O {
 	 */
 	public void updatePriceArticle(int id, double newPrice) {
 		// TODO Auto-generated method stub
-
+        System.out.println("\nActualizando precio del articulo");
+        ObjectSet<Article> result = db.queryByExample(new Article(id, null, null, null, 0));
+        while (result.hasNext()){
+            Article article = result.next();
+            Article a = article;
+            a.setRecommendedPrice((float) newPrice);
+            db.set(a);
+            System.out.println(db.get(article));
+        }
 	}
 
 	/**
@@ -120,9 +125,11 @@ public class TShirtsDB4O {
 	 */
 	public void addArticle(int i, String string, String string2, String string3, double d) {
 		// TODO Auto-generated method stub
-		Article article = new Article(i, string, string2, string3, (float)d);
+        System.out.println("\nAñadiendo articulo");
+        Article article = new Article(i, string, string2, string3, (float)d);
 		db.store(article);
-	}
+        System.out.println(db.get(article));
+    }
 
 	/**
 	 * Delete an article using idArticle
@@ -219,19 +226,29 @@ public class TShirtsDB4O {
 		// TODO Auto-generated method stub
         System.out.println("\nELIMINANDO!");
         ObjectSet<Order> result =  db.queryByExample(Order.class);
-        System.out.println(result.size());
+        System.out.println("Orders: "+result.size());
         while (result.hasNext()) {
             db.delete(result.next());
         }
         ObjectSet<Customer> result2 =  db.queryByExample(Customer.class);
-        System.out.println(result2.size());
+        System.out.println("Customers: "+result2.size());
         while (result2.hasNext()) {
             db.delete(result2.next());
         }
         ObjectSet<Article> result3 =  db.queryByExample(Article.class);
-        System.out.println(result3.size());
+        System.out.println("Articles: "+result3.size());
         while (result3.hasNext()) {
             db.delete(result3.next());
+        }
+        ObjectSet<CreditCard> result4 =  db.queryByExample(CreditCard.class);
+        System.out.println("Credits cards: "+result4.size());
+        while (result4.hasNext()) {
+            db.delete(result4.next());
+        }
+        ObjectSet<OrderDetail> result5 =  db.queryByExample(OrderDetail.class);
+        System.out.println("Order details: "+result5.size());
+        while (result5.hasNext()) {
+            db.delete(result5.next());
         }
     }
 
