@@ -2,9 +2,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
 
 import javax.sound.midi.Soundbank;
 
+import Entities.Customer;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
@@ -21,7 +24,7 @@ import Entities.Order;
 public class TShirtsDB4O {
 	public static ArrayList<Order> orders;
 	static ObjectContainer db;
-	
+
 
 	/**
 	 * Implement TODO methods and run to test
@@ -36,7 +39,7 @@ public class TShirtsDB4O {
 	public static void main(String[] args) throws IOException, ParseException {
 		TShirtsDB4O TSM = new TShirtsDB4O();
 		FileAccessor fa = new FileAccessor();
-		fa.readArticlesFile("articles.csv");
+		fa.readArticlesFile("articles.csv"); //TODO: Está mal, no mete todos los articulos
 		fa.readCreditCardsFile("creditCards.csv");
 		fa.readCustomersFile("customers.csv");
 		fa.readOrdersFile("orders.csv");
@@ -47,29 +50,29 @@ public class TShirtsDB4O {
 			File file = new File("orders.db");
 			String fullPath = file.getAbsolutePath();
 			db = Db4o.openFile(fullPath);
-
-			TSM.addOrders();
-			TSM.listOrders();
-			TSM.listArticles();
-			TSM.addArticle(7, "CALCETINES EJECUTIVOS 'JACKSON 3PK'", "gris", "45", 18.00);
-			TSM.updatePriceArticle(7, 12.00);
-			TSM.llistaArticlesByName("CALCETINES EJECUTIVOS 'JACKSON 3PK'");
-			TSM.deletingArticlesByName("POLO BÁSICO 'MANIA'");
-			TSM.deleteArticleById(7);
-			TSM.listArticles();
-			TSM.listCustomers();
+//11,5,6
+			TSM.addOrders();//
+			TSM.listOrders();//
+			TSM.listArticles();//
+			TSM.addArticle(7, "CALCETINES EJECUTIVOS 'JACKSON 3PK'", "gris", "45", 18.00);//
+            TSM.updatePriceArticle(7, 12.00);
+			TSM.llistaArticlesByName("CALCETINES EJECUTIVOS 'JACKSON 3PK'");//
+			TSM.deletingArticlesByName("POLO BÁSICO 'MANIA'");//
+            TSM.deleteArticleById(7);//
+			TSM.listArticles();//
+			TSM.listCustomers();//
 			TSM.changeCreditCardToCustomer(1);
-			TSM.listCustomers();
-			TSM.llistaCustomerByName("Laura");
+			TSM.listCustomers();//
+			TSM.llistaCustomerByName("Laura");//
 			TSM.showOrdersByCustomerName("Laura");
-			TSM.showCreditCardByCustomerName("Laura");
-			TSM.deleteCustomerbyId(2);
+			TSM.showCreditCardByCustomerName("Laura");//
+			TSM.deleteCustomerbyId(2);//
 			TSM.retrieveOrderContentById_Order(2);
 			TSM.deleteOrderContentById_Order(2);
 			TSM.retrieveOrderContentById_Order(2);
-			TSM.listCustomers();
-			TSM.clearDatabase();
-			TSM.listOrders();
+			TSM.listCustomers();//
+			TSM.clearDatabase();// Creo xd //
+			TSM.listOrders();//
 
 		} finally {
 			// close database
@@ -129,7 +132,10 @@ public class TShirtsDB4O {
 	 */
 	public void deleteArticleById(int i) {
 		// TODO Auto-generated method stub
-		
+		ObjectSet<Article> result = db.queryByExample(new Article(i, null, null, null, 0));
+		while (result.hasNext()){
+			db.delete(result.next());
+		}
 	}
 
 	/**
@@ -162,7 +168,10 @@ public class TShirtsDB4O {
 	 */
 	public void deleteCustomerbyId(int i) {
 		// TODO Auto-generated method stub
-
+		ObjectSet<Customer> result = db.queryByExample(new Customer(i, null, null, null, null, null));
+		while (result.hasNext()){
+			db.delete(result.next());
+		}
 	}
 
 	/**
@@ -174,7 +183,11 @@ public class TShirtsDB4O {
 	 */
 	public void showCreditCardByCustomerName(String string) {
 		// TODO Auto-generated method stub
-
+        System.out.println("\nShow credit card by customer name");
+        ObjectSet<Customer> result = db.queryByExample(new Customer(0, string, null, null, null, null));
+        while (result.hasNext()){
+            System.out.println(result.next().getCreditCard());
+        }
 	}
 
 	/**
@@ -183,14 +196,44 @@ public class TShirtsDB4O {
 	 */
 	public void showOrdersByCustomerName(String string) {
 		// TODO Auto-generated method stub
-
+        /*List<Customer> customers = db.query(new com.db4o.query.Predicate<Customer>() {
+            @Override
+            public boolean match(Customer customer) {
+                return customer.getName().compareTo(string)==0;
+            }
+        });
+        ObjectSet<Order> result = db.queryByExample(Order.class);
+        while (result.hasNext()) {
+            System.out.println("\nOrders by customer name: " + orders.size());
+            for (Customer customer : customers) {
+                Order orderss = result.next();
+                try {
+                    if (customer.getName().equals(orderss.getCustomer().getName())) System.out.println(orderss);
+                } catch (Exception e){}
+            }
+        }*/
 	}
 
 	/** delete all objects from the whole database */
 	public void clearDatabase() {
 		// TODO Auto-generated method stub
-
-	}
+        System.out.println("\nELIMINANDO!");
+        ObjectSet<Order> result =  db.queryByExample(Order.class);
+        System.out.println(result.size());
+        while (result.hasNext()) {
+            db.delete(result.next());
+        }
+        ObjectSet<Customer> result2 =  db.queryByExample(Customer.class);
+        System.out.println(result2.size());
+        while (result2.hasNext()) {
+            db.delete(result2.next());
+        }
+        ObjectSet<Article> result3 =  db.queryByExample(Article.class);
+        System.out.println(result3.size());
+        while (result3.hasNext()) {
+            db.delete(result3.next());
+        }
+    }
 
 	/**
 	 * Delete Article using article name
@@ -200,31 +243,59 @@ public class TShirtsDB4O {
 	 */
 	public void deletingArticlesByName(String string) {
 		// TODO Auto-generated method stub
+        ObjectSet<Article> result = db.queryByExample(new Article(0, string, null, null, 0));
+        System.out.println("\nEliminando articulos por nombre: "+result.size());
+        while (result.hasNext()){
+            Article article = result.next();
+            System.out.println(article);
+            db.delete(article);
+        }
 
 	}
 
 	/** Method to list Articles from the database using their name */
 	public void llistaArticlesByName(String string) {
 		// TODO Auto-generated method stub
-
-	}
+        List<Article> articles = db.query(new com.db4o.query.Predicate<Article>() {
+            @Override
+            public boolean match(Article article) {
+                return article.getName().compareTo(string)==0;
+            }
+        });
+        System.out.println("\nListar articulos por nombre: "+articles.size());
+        for (Article article : articles) System.out.println(article.toString());
+    }
 
 	/** Method to list Customers from the database using their name */
 	public void llistaCustomerByName(String string) {
 		// TODO Auto-generated method stub
+
+        List<Customer> customers = db.query(new com.db4o.query.Predicate<Customer>() {
+            @Override
+            public boolean match(Customer customer) {
+                return customer.getName().compareTo(string)==0;
+            }
+        });
+        System.out.println("\nCustomers by name: "+customers.size());
+        for (Customer customer : customers) System.out.println(customer.toString());
 
 	}
 
 	/** Method to list all Customers from the database */
 	public void listCustomers() {
 		// TODO Auto-generated method stub
-
+        System.out.println("\nCustomers");
+        ObjectSet<Customer> result =  db.queryByExample(Customer.class);
+        System.out.println(result.size());
+        while (result.hasNext()) {
+            System.out.println(result.next());
+        }
 	}
 
 	/** Method to list all Articles from the database */
 	public void listArticles() {
 		// TODO Auto-generated method stub
-		System.out.println("Articulos");
+		System.out.println("\nArticulos");
 		ObjectSet<Article> result = db.queryByExample(Article.class);
 		System.out.println(result.size());
 		while (result.hasNext()) {
@@ -244,7 +315,7 @@ public class TShirtsDB4O {
 	/** Method to list all Orders from the database */
 	public void listOrders() {
 		// TODO Auto-generated method stub
-		System.out.println("Ordenes");
+		System.out.println("\nOrdenes");
 		ObjectSet<Order> result =  db.queryByExample(Order.class);
 		System.out.println(result.size());
 		while (result.hasNext()) {

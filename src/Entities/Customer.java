@@ -73,4 +73,16 @@ public class Customer {
 	public void setCreditCard(CreditCard creditCard) {
 		this.creditCard = creditCard;
 	}
+
+	@Override
+	public String toString() {
+		return "Customer{" +
+				"idCustomer=" + idCustomer +
+				", name='" + name + '\'' +
+				", address='" + address + '\'' +
+				", email='" + email + '\'' +
+				", phone='" + phone + '\'' +
+				", creditCard=" + creditCard +
+				'}';
+	}
 }
