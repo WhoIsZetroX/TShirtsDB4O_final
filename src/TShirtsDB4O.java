@@ -61,7 +61,7 @@ public class TShirtsDB4O {
         TSM.changeCreditCardToCustomer(1);
 			TSM.listCustomers();//
 			TSM.llistaCustomerByName("Laura");//
-			TSM.showOrdersByCustomerName("Laura");
+        TSM.showOrdersByCustomerName("Laura");
 			TSM.showCreditCardByCustomerName("Laura");//
 			TSM.deleteCustomerbyId(2);//
         TSM.retrieveOrderContentById_Order(2);
