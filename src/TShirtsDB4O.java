@@ -55,7 +55,7 @@ public class TShirtsDB4O {
             TSM.updatePriceArticle(7, 12.00);//
 			TSM.llistaArticlesByName("CALCETINES EJECUTIVOS 'JACKSON 3PK'");//
 			TSM.deletingArticlesByName("POLO BÁSICO 'MANIA'");//
-	TSM.deleteArticleById(7);//
+			TSM.deleteArticleById(7);//
 			TSM.listArticles();//
 			TSM.listCustomers();//
 			TSM.changeCreditCardToCustomer(1); // //TODO: Falta hacer que el usuario pueda cambiar como quiera los datos
