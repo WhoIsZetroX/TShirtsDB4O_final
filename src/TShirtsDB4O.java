@@ -58,17 +58,17 @@ public class TShirtsDB4O {
             TSM.deleteArticleById(7);//
 			TSM.listArticles();//
 			TSM.listCustomers();//
-        TSM.changeCreditCardToCustomer(1);
+			TSM.changeCreditCardToCustomer(1); // //TODO: Falta hacer que el usuario pueda cambiar como quiera los datos
 			TSM.listCustomers();//
 			TSM.llistaCustomerByName("Laura");//
-        TSM.showOrdersByCustomerName("Laura");
+			TSM.showOrdersByCustomerName("Laura");//
 			TSM.showCreditCardByCustomerName("Laura");//
 			TSM.deleteCustomerbyId(2);//
-        TSM.retrieveOrderContentById_Order(2);
-        TSM.deleteOrderContentById_Order(2);
-        TSM.retrieveOrderContentById_Order(2);
+			TSM.retrieveOrderContentById_Order(2);//
+			TSM.deleteOrderContentById_Order(2);//
+			TSM.retrieveOrderContentById_Order(2);//
 			TSM.listCustomers();//
-        TSM.clearDatabase();// Creo xd //
+			TSM.clearDatabase();//
 			TSM.listOrders();//
 
 		} finally {
@@ -86,7 +86,17 @@ public class TShirtsDB4O {
 	 */
 	public void changeCreditCardToCustomer(int i) {
 		// TODO Auto-generated method stub
-
+		System.out.println("\nActualizando tarjeta de credito al cliente");
+		ObjectSet<Customer> result = db.queryByExample(new Customer(i, null, null, null, null, null));
+		Customer customer = new Customer();
+		while (result.hasNext()){
+			customer = result.next();
+		}
+		Customer c = customer;
+		CreditCard creditCard = new CreditCard("lala", "lala", 1, 2);
+		c.setCreditCard(creditCard);
+		db.set(c);
+		System.out.println(db.get(c));
 	}
 
 	/**
@@ -102,9 +112,8 @@ public class TShirtsDB4O {
         ObjectSet<Article> result = db.queryByExample(new Article(id, null, null, null, 0));
         while (result.hasNext()){
             Article article = result.next();
-            Article a = article;
-            a.setRecommendedPrice((float) newPrice);
-            db.set(a);
+            article.setRecommendedPrice((float) newPrice);
+            db.set(article);
             System.out.println(db.get(article));
         }
 	}
@@ -153,7 +162,11 @@ public class TShirtsDB4O {
 	 */
 	public void deleteOrderContentById_Order(int i) {
 		// TODO Auto-generated method stub
-
+		System.out.println("\nDelete Order Content By Id_Order");
+		ObjectSet<Order> result = db.queryByExample(new Order(i, null, null, null, null));
+			Order or = result.next();
+			db.delete(or);
+			System.out.println(db.get(or));
 	}
 
 	/**
@@ -164,7 +177,11 @@ public class TShirtsDB4O {
 	 */
 	public void retrieveOrderContentById_Order(int i) {
 		// TODO Auto-generated method stub
-
+		System.out.println("\nRetrieve Order Content By Id_Order");
+		ObjectSet<Order> result = db.queryByExample(new Order(i, null, null, null, null));
+		while (result.hasNext()){
+			System.out.println(result.next().toString());
+		}
 	}
 
 	/**
@@ -203,7 +220,7 @@ public class TShirtsDB4O {
 	 */
 	public void showOrdersByCustomerName(String string) {
 		// TODO Auto-generated method stub
-        /*List<Customer> customers = db.query(new com.db4o.query.Predicate<Customer>() {
+       /* List<Customer> customers = db.query(new com.db4o.query.Predicate<Customer>() {
             @Override
             public boolean match(Customer customer) {
                 return customer.getName().compareTo(string)==0;
@@ -211,7 +228,7 @@ public class TShirtsDB4O {
         });
         ObjectSet<Order> result = db.queryByExample(Order.class);
         while (result.hasNext()) {
-            System.out.println("\nOrders by customer name: " + orders.size());
+            System.out.println("\nOrders by customer name: " + result.size());
             for (Customer customer : customers) {
                 Order orderss = result.next();
                 try {
@@ -219,6 +236,15 @@ public class TShirtsDB4O {
                 } catch (Exception e){}
             }
         }*/
+		List<Order> articles = db.query(new com.db4o.query.Predicate<Order>() {
+			@Override
+			public boolean match(Order article) {
+				return article.getCustomer().getName().compareTo(string)==0;
+			}
+		});
+		System.out.println("\nShow Orders By Customer Name: "+articles.size());
+		for (Order article : articles) System.out.println(article.toString());
+
 	}
 
 	/** delete all objects from the whole database */
@@ -317,7 +343,6 @@ public class TShirtsDB4O {
 		System.out.println(result.size());
 		while (result.hasNext()) {
 			System.out.println(result.next());
-			
 		}
 	}
 

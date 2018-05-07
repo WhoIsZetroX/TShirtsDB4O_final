@@ -67,10 +67,20 @@ public class Order {
 		this.details = details;
 	}
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "Order [idOrder=" + idOrder + ", orderDate=" + orderDate + ", deliveryDate=" + deliveryDate
 				+ ", customer=" + customer + "]";
-	}
+	}*/
 
+	@Override
+	public String toString() {
+		return "Order[" +
+				"idOrder=" + idOrder +
+				", orderDate=" + orderDate +
+				", deliveryDate=" + deliveryDate +
+				", customer=" + customer +
+				", details=" + details +
+				']';
+	}
 }

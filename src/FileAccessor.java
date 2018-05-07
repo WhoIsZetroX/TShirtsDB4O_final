@@ -25,6 +25,7 @@ public class FileAccessor {
 	ArrayList<Customer> customers = new ArrayList<Customer>();
 	ArrayList<CreditCard> creditCards = new ArrayList<CreditCard>();
 	ArrayList<Article> articles = new ArrayList<Article>();
+	ArrayList<Article> articles1 = new ArrayList<Article>();
 	
 	public FileAccessor(){
 	}
@@ -146,8 +147,9 @@ public class FileAccessor {
 		BufferedReader br = new BufferedReader(new FileReader(filename));
 		
 		String line = br.readLine();
-		
-		while(line != null){
+		int count=1;
+		//while(line != null){
+		while(count<=8){
 			StringTokenizer stk = new StringTokenizer(line, ",");
 			
 			int idArticle = Integer.parseInt(stk.nextToken());
@@ -159,6 +161,7 @@ public class FileAccessor {
 			articles.add(new Article(idArticle, name, colour, size, recommendedPrice));
 			
 			line = br.readLine();
+			count++;
 		}
 		br.close();
 	}
