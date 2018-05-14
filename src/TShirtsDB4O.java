@@ -36,7 +36,7 @@ public class TShirtsDB4O {
 	public static void main(String[] args) throws IOException, ParseException {
 		TShirtsDB4O TSM = new TShirtsDB4O();
 		FileAccessor fa = new FileAccessor();
-		fa.readArticlesFile("articles.csv"); //TODO: Está mal, no mete todos los articulos
+		fa.readArticlesFile("articles.csv");
 		fa.readCreditCardsFile("creditCards.csv");
 		fa.readCustomersFile("customers.csv");
 		fa.readOrdersFile("orders.csv");
