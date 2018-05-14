@@ -85,7 +85,6 @@ public class TShirtsDB4O {
 	 *            idCustomer
 	 */
 	public void changeCreditCardToCustomer(int i) {
-		// TODO Auto-generated method stub
 		System.out.println("\nActualizando tarjeta de credito al cliente");
 		ObjectSet<Customer> result = db.queryByExample(new Customer(i, null, null, null, null, null));
 		Customer customer = new Customer();
@@ -107,7 +106,6 @@ public class TShirtsDB4O {
 	 * @param newPrice
 	 */
 	public void updatePriceArticle(int id, double newPrice) {
-		// TODO Auto-generated method stub
         System.out.println("\nActualizando precio del articulo");
         ObjectSet<Article> result = db.queryByExample(new Article(id, null, null, null, 0));
         while (result.hasNext()){
@@ -133,7 +131,6 @@ public class TShirtsDB4O {
 	 *            article price
 	 */
 	public void addArticle(int i, String string, String string2, String string3, double d) {
-		// TODO Auto-generated method stub
         System.out.println("\nAñadiendo articulo");
         Article article = new Article(i, string, string2, string3, (float)d);
 		db.store(article);
@@ -147,7 +144,6 @@ public class TShirtsDB4O {
 	 *            idArticle
 	 */
 	public void deleteArticleById(int i) {
-		// TODO Auto-generated method stub
 		ObjectSet<Article> result = db.queryByExample(new Article(i, null, null, null, 0));
 		while (result.hasNext()){
 			db.delete(result.next());
@@ -161,7 +157,6 @@ public class TShirtsDB4O {
 	 *            idOrder
 	 */
 	public void deleteOrderContentById_Order(int i) {
-		// TODO Auto-generated method stub
 		System.out.println("\nDelete Order Content By Id_Order");
 		ObjectSet<Order> result = db.queryByExample(new Order(i, null, null, null, null));
 			Order or = result.next();
@@ -176,7 +171,6 @@ public class TShirtsDB4O {
 	 *            idOrder
 	 */
 	public void retrieveOrderContentById_Order(int i) {
-		// TODO Auto-generated method stub
 		System.out.println("\nRetrieve Order Content By Id_Order");
 		ObjectSet<Order> result = db.queryByExample(new Order(i, null, null, null, null));
 		while (result.hasNext()){
@@ -191,7 +185,6 @@ public class TShirtsDB4O {
 	 *            idCustomer
 	 */
 	public void deleteCustomerbyId(int i) {
-		// TODO Auto-generated method stub
 		ObjectSet<Customer> result = db.queryByExample(new Customer(i, null, null, null, null, null));
 		while (result.hasNext()){
 			db.delete(result.next());
@@ -206,7 +199,6 @@ public class TShirtsDB4O {
 	 *            customer name
 	 */
 	public void showCreditCardByCustomerName(String string) {
-		// TODO Auto-generated method stub
         System.out.println("\nShow credit card by customer name");
         ObjectSet<Customer> result = db.queryByExample(new Customer(0, string, null, null, null, null));
         while (result.hasNext()){
@@ -219,23 +211,6 @@ public class TShirtsDB4O {
 	 * customer name
 	 */
 	public void showOrdersByCustomerName(String string) {
-		// TODO Auto-generated method stub
-       /* List<Customer> customers = db.query(new com.db4o.query.Predicate<Customer>() {
-            @Override
-            public boolean match(Customer customer) {
-                return customer.getName().compareTo(string)==0;
-            }
-        });
-        ObjectSet<Order> result = db.queryByExample(Order.class);
-        while (result.hasNext()) {
-            System.out.println("\nOrders by customer name: " + result.size());
-            for (Customer customer : customers) {
-                Order orderss = result.next();
-                try {
-                    if (customer.getName().equals(orderss.getCustomer().getName())) System.out.println(orderss);
-                } catch (Exception e){}
-            }
-        }*/
 		List<Order> articles = db.query(new com.db4o.query.Predicate<Order>() {
 			@Override
 			public boolean match(Order article) {
@@ -249,7 +224,6 @@ public class TShirtsDB4O {
 
 	/** delete all objects from the whole database */
 	public void clearDatabase() {
-		// TODO Auto-generated method stub
         System.out.println("\nELIMINANDO!");
         ObjectSet<Order> result =  db.queryByExample(Order.class);
         System.out.println("Orders: "+result.size());
@@ -285,7 +259,6 @@ public class TShirtsDB4O {
 	 *            Article name
 	 */
 	public void deletingArticlesByName(String string) {
-		// TODO Auto-generated method stub
         ObjectSet<Article> result = db.queryByExample(new Article(0, string, null, null, 0));
         System.out.println("\nEliminando articulos por nombre: "+result.size());
         while (result.hasNext()){
@@ -298,7 +271,6 @@ public class TShirtsDB4O {
 
 	/** Method to list Articles from the database using their name */
 	public void llistaArticlesByName(String string) {
-		// TODO Auto-generated method stub
         List<Article> articles = db.query(new com.db4o.query.Predicate<Article>() {
             @Override
             public boolean match(Article article) {
@@ -311,8 +283,6 @@ public class TShirtsDB4O {
 
 	/** Method to list Customers from the database using their name */
 	public void llistaCustomerByName(String string) {
-		// TODO Auto-generated method stub
-
         List<Customer> customers = db.query(new com.db4o.query.Predicate<Customer>() {
             @Override
             public boolean match(Customer customer) {
@@ -326,7 +296,6 @@ public class TShirtsDB4O {
 
 	/** Method to list all Customers from the database */
 	public void listCustomers() {
-		// TODO Auto-generated method stub
         System.out.println("\nCustomers");
         ObjectSet<Customer> result =  db.queryByExample(Customer.class);
         System.out.println(result.size());
@@ -337,7 +306,6 @@ public class TShirtsDB4O {
 
 	/** Method to list all Articles from the database */
 	public void listArticles() {
-		// TODO Auto-generated method stub
 		System.out.println("\nArticulos");
 		ObjectSet<Article> result = db.queryByExample(Article.class);
 		System.out.println(result.size());
@@ -348,7 +316,6 @@ public class TShirtsDB4O {
 
 	/** Method to add all orders from ArrayList and store them into database */
 	public void addOrders() {
-		// TODO Auto-generated method stub
 		for(int i =0;i<orders.size();i++) {
 			db.store(orders.get(i));
 		}
@@ -356,7 +323,6 @@ public class TShirtsDB4O {
 
 	/** Method to list all Orders from the database */
 	public void listOrders() {
-		// TODO Auto-generated method stub
 		System.out.println("\nOrdenes");
 		ObjectSet<Order> result =  db.queryByExample(Order.class);
 		System.out.println(result.size());
