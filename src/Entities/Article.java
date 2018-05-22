@@ -1,5 +1,7 @@
 package Entities;
 
+import com.db4o.ObjectSet;
+
 /**
  * @author Joan Anton Pérez Braña
  * @since 19/02/2017
@@ -23,6 +25,17 @@ public class Article {
 	
 	public Article() {
 		super();
+	}
+
+	public <T> Article(ObjectSet<T> ts) {
+
+		/*if (ts.hasNext()){
+			setIdArticle((Integer) ts.next());
+			setName((String) ts.next());
+			setColour((String) ts.next());
+			setSize((String) ts.next());
+			setRecommendedPrice((Float) ts.next());
+		}*/
 	}
 
 	public int getIdArticle() {

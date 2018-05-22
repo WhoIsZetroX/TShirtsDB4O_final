@@ -147,9 +147,7 @@ public class FileAccessor {
 		BufferedReader br = new BufferedReader(new FileReader(filename));
 		
 		String line = br.readLine();
-		int count=1;
-		//while(line != null){
-		while(count<=8){
+		while(line != null){
 			StringTokenizer stk = new StringTokenizer(line, ",");
 			
 			int idArticle = Integer.parseInt(stk.nextToken());
@@ -161,7 +159,6 @@ public class FileAccessor {
 			articles.add(new Article(idArticle, name, colour, size, recommendedPrice));
 			
 			line = br.readLine();
-			count++;
 		}
 		br.close();
 	}
