@@ -8,6 +8,8 @@ import Entities.*;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import com.db4o.query.Constraint;
+import com.db4o.query.Query;
 import javafx.beans.binding.IntegerBinding;
 
 import javax.print.attribute.standard.MediaSize;
@@ -21,7 +23,7 @@ import javax.print.attribute.standard.MediaSize;
 public class TShirtsDB4O {
 	public static ArrayList<Order> orders;
 	static ObjectContainer db;
-	static int option=1, create, list;
+	static int option=1, create, list, update;
 	static String confirm, creditCardCreation="";
 	static int customerCreation=0;
 	static Scanner sc = new Scanner(System.in);
@@ -390,32 +392,46 @@ public class TShirtsDB4O {
                                 TSM.listCreditCardsSwitch();
                                 break;
                             case 3:
-                                System.out.println("\n1- List all\n" +
-                                        "2- List customers by id\n" +
-                                        "3- List customers by name\n" +
-                                        "4- List customers by address\n" +
-                                        "4- List customers by email\n" +
-                                        "4- List customers by phone\n" +
-                                        "4- List customers by creditCard\n");
-                                int listCustomers = sc.nextInt(); sc.nextLine();
-                                if (listCustomers==1) {
-                                    TSM.listCustomers();
-                                }else if (listCustomers==2) {
-
-                                }
-                                TSM.llistaCustomerByName("Laura");
+                                TSM.listCustomersSwitch();
+                                //TSM.llistaCustomerByName("Laura");
                                 break;
                             case 4:
-                                TSM.listOrders();
-                                TSM.showOrdersByCustomerName("Laura");
-                                TSM.retrieveOrderContentById_Order(2);
+                                TSM.listOrdersSwitch();
+                                //TSM.showOrdersByCustomerName("Laura");
+                                //TSM.retrieveOrderContentById_Order(2);
                                 break;
                             case 5:
+                                System.out.println("<--");
                                 break;
                                 default:
                                     System.out.println("Invalid option");
                         }
 					case 3:
+                        System.out.println("\n1- Articles\n" +
+                                "2- CreditCards\n" +
+                                "3- Customers\n" +
+                                "4- Orders\n" +
+                                "5- Back <--\n");
+                        update = sc.nextInt(); sc.nextLine();
+                        switch (update) {
+                            case 1:
+
+                                break;
+                            case 2:
+
+                                break;
+                            case 3:
+
+                                break;
+                            case 4:
+
+                                break;
+                            case 5:
+                                System.out.println("<--");
+                                break;
+                            default:
+                                System.out.println("Invalid option");
+                        }
 						TSM.updatePriceArticle(7, 12.00);
 						TSM.changeCreditCardToCustomer(1);
 						break;
@@ -590,6 +606,14 @@ public class TShirtsDB4O {
 			System.out.println(result.next().toString());
 		}
 	}
+
+    public void retrieveOrderDetailsById_Order(int i) {
+        System.out.println("\nRetrieve Order Content By Id_Order");
+        ObjectSet<Order> result = db.queryByExample(new Order(i, null, null, null, null));
+        while (result.hasNext()){
+            System.out.println(result.next().getDetails().toString());
+        }
+    }
 
 	/**
 	 * Delete Customer using idCustomer
@@ -811,6 +835,54 @@ public class TShirtsDB4O {
         for (Customer customer : customers) System.out.println(customer.toString());
 
 	}
+
+    public void llistaCustomerByAddress(String string) {
+        List<Customer> customers = db.query(new com.db4o.query.Predicate<Customer>() {
+            @Override
+            public boolean match(Customer customer) {
+                return customer.getAddress().compareTo(string)==0;
+            }
+        });
+        System.out.println("\nCustomers by address: "+customers.size());
+        for (Customer customer : customers) System.out.println(customer.toString());
+
+    }
+
+    public void llistaCustomerByEmail(String string) {
+        List<Customer> customers = db.query(new com.db4o.query.Predicate<Customer>() {
+            @Override
+            public boolean match(Customer customer) {
+                return customer.getEmail().compareTo(string)==0;
+            }
+        });
+        System.out.println("\nCustomers by email: "+customers.size());
+        for (Customer customer : customers) System.out.println(customer.toString());
+
+    }
+
+    public void llistaCustomerByPhone(String string) {
+        List<Customer> customers = db.query(new com.db4o.query.Predicate<Customer>() {
+            @Override
+            public boolean match(Customer customer) {
+                return customer.getPhone().compareTo(string)==0;
+            }
+        });
+        System.out.println("\nCustomers by phone: "+customers.size());
+        for (Customer customer : customers) System.out.println(customer.toString());
+
+    }
+
+    public void llistaCustomerByCreditCard(String string) {
+        List<Customer> customers = db.query(new com.db4o.query.Predicate<Customer>() {
+            @Override
+            public boolean match(Customer customer) {
+                return customer.getCreditCard().getNumber().compareTo(string)==0;
+            }
+        });
+        System.out.println("\nCustomers by credit card: "+customers.size());
+        for (Customer customer : customers) System.out.println(customer.toString());
+
+    }
 
 	public void listOrderById(int s) {
 		ObjectSet<Order> result = db.queryByExample(new Order(s, null, null, null, null));
@@ -1055,6 +1127,118 @@ public class TShirtsDB4O {
             showCreditCardByCustomerName(cn);
             //TSM.showCreditCardByCustomerName("Laura");
         }else if (listCards==5){
+            System.out.println("<--");
+        }else{
+            System.out.println("Invalid option");
+        }
+    }
+
+    public void listCustomersSwitch(){
+        System.out.println("\n1- List all\n" +
+                "2- List customers by id\n" +
+                "3- List customers by name\n" +
+                "4- List customers by address\n" +
+                "5- List customers by email\n" +
+                "6- List customers by phone\n" +
+                "7- List customers by creditCard\n" +
+                "8- Back <--");
+        int listCustomers = sc.nextInt(); sc.nextLine();
+        if (listCustomers==1) {
+            listCustomers();
+        }else if (listCustomers==2) {
+            listCustomersId();
+            System.out.println("Customer id: ");
+            int custId = sc.nextInt(); sc.nextLine();
+            llistaCustomerById(custId);
+        }else if (listCustomers==3) {
+            listCustomersName();
+            System.out.println("Customer name: ");
+            String custName = sc.nextLine();
+            llistaCustomerByName(custName);
+        }else if (listCustomers==4) {
+            System.out.println("Customer address: ");
+            String custAddress = sc.nextLine();
+            llistaCustomerByAddress(custAddress);
+        }else if (listCustomers==5) {
+            System.out.println("Customer email: ");
+            String custemail = sc.nextLine();
+            llistaCustomerByEmail(custemail);
+        }else if (listCustomers==6) {
+            System.out.println("Customer phone: ");
+            String custphone = sc.nextLine();
+            llistaCustomerByPhone(custphone);
+        }else if (listCustomers==7) {
+            System.out.println("Customer credit card: ");
+            String custcc = sc.nextLine();
+            llistaCustomerByCreditCard(custcc);
+        }else if (listCustomers==8) {
+            System.out.println("<--");
+        }else{
+            System.out.println("Invalid option");
+        }
+    }
+
+    public void listOrdersByDate(String order){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        ObjectSet<Order> result = null;
+        try {
+            result = db.queryByExample(new Order(0, formatter.parse(order), null, null, null));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        while (result.hasNext()){
+            System.out.println(result.next());
+        }
+
+    }
+
+    public void listOrdersByDeliveryDate(String order){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        ObjectSet<Order> result = null;
+        try {
+            result = db.queryByExample(new Order(0, null, formatter.parse(order), null, null));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        while (result.hasNext()){
+            System.out.println(result.next());
+        }
+
+    }
+
+    public void listOrdersSwitch(){
+        System.out.println("1- List all" +
+                "2- List orders by id" +
+                "3- List orders by order date" +
+                "4- List orders by delivery date" +
+                "5- List orders by costumer name" +
+                "6- Retrieve order details by id order" +
+                "7- Back <--");
+        int listorder = sc.nextInt(); sc.nextLine();
+
+        if (listorder==1){
+            listOrders();
+        }else if (listorder==2){
+            System.out.println("Order id");
+            int ordid = sc.nextInt(); sc.nextLine();
+            retrieveOrderContentById_Order(ordid);
+        }else if (listorder==3){
+            System.out.println("Order date [31-12-2018]");
+            String ordid = sc.nextLine();
+            listOrdersByDate(ordid);
+        }else if (listorder==4){
+            System.out.println("Order delivery date [31-12-2018]");
+            String ordid = sc.nextLine();
+            listOrdersByDeliveryDate(ordid);
+        }else if (listorder==5){
+            System.out.println("Customer name: ");
+            String ordcname = sc.nextLine();
+            showOrdersByCustomerName(ordcname);
+        }else if (listorder==6){
+            System.out.println("Order id: ");
+            int ordid = sc.nextInt(); sc.nextLine();
+            retrieveOrderDetailsById_Order(ordid);
+        }else if (listorder==7){
             System.out.println("<--");
         }else{
             System.out.println("Invalid option");
