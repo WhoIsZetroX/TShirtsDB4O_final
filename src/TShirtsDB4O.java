@@ -27,8 +27,9 @@ public class TShirtsDB4O {
 	static String confirm, creditCardCreation="";
 	static int customerCreation=0;
 	static Scanner sc = new Scanner(System.in);
+    static SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
-	/**
+    /**
 	 * Implement TODO methods and run to test
 	 * 
 	 * @param args
@@ -406,6 +407,7 @@ public class TShirtsDB4O {
                                 default:
                                     System.out.println("Invalid option");
                         }
+                        break;
 					case 3:
                         System.out.println("\n1- Articles\n" +
                                 "2- CreditCards\n" +
@@ -415,16 +417,161 @@ public class TShirtsDB4O {
                         update = sc.nextInt(); sc.nextLine();
                         switch (update) {
                             case 1:
-
+								System.out.println("\n1- Article name\n" +
+										"2- Article colour\n" +
+										"3- Article size\n" +
+										"4- Article price\n");
+								int artOp =  sc.nextInt(); sc.nextLine();
+								if (artOp==1){
+                                    TSM.listArticles();
+								    System.out.println("Article id: ");
+                                    int id = sc.nextInt(); sc.nextLine();
+                                    System.out.println("New name: ");
+                                    String name = sc.nextLine();
+                                    TSM.updateNameArticle(id, name);
+								}else if (artOp==2){
+                                    TSM.listArticles();
+                                    System.out.println("Article id: ");
+                                    int id = sc.nextInt(); sc.nextLine();
+                                    System.out.println("New colour: ");
+                                    String colour = sc.nextLine();
+                                    TSM.updateColourArticle(id, colour);
+                                }else if (artOp==3){
+                                    TSM.listArticles();
+                                    System.out.println("Article id: ");
+                                    int id = sc.nextInt(); sc.nextLine();
+                                    System.out.println("New size: ");
+                                    String size = sc.nextLine();
+                                    TSM.updateSizeArticle(id, size);
+								}else if (artOp==4){
+                                    TSM.listArticles();
+                                    System.out.println("Article id: ");
+                                    int id = sc.nextInt(); sc.nextLine();
+                                    System.out.println("New price: ");
+                                    float price = sc.nextFloat(); sc.nextLine();
+                                    TSM.updatePriceArticle(id,price);
+								}else{
+									System.out.println("Invalid option");
+								}
                                 break;
                             case 2:
-
+                                System.out.println("\n1- Credit card number\n" +
+                                        "2- Credit card security number\n" +
+                                        "3- Credit card last month\n" +
+                                        "4- Credit card last year\n" +
+                                        "5- Back <--");
+                                int ccOp =  sc.nextInt(); sc.nextLine();
+                                if (ccOp==1){
+                                    TSM.listArticles();
+                                    System.out.println("Credit card number: ");
+                                    String id = sc.nextLine();
+                                    System.out.println("New number: ");
+                                    String number = sc.nextLine();
+                                    TSM.updateNumberCC(id, number);
+                                }else if (ccOp==2){
+                                    TSM.listArticles();
+                                    System.out.println("Credit card number: ");
+                                    String id = sc.nextLine();
+                                    System.out.println("New security number: ");
+                                    String snumber = sc.nextLine();
+                                    TSM.updateSNumberCC(id, snumber);
+                                }else if (ccOp==3){
+                                    TSM.listArticles();
+                                    System.out.println("Credit card number: ");
+                                    String id = sc.nextLine();
+                                    System.out.println("New month: ");
+                                    int month = sc.nextInt(); sc.nextLine();
+                                    TSM.updateMonthCC(id, month);
+                                }else if (ccOp==4){
+                                    TSM.listArticles();
+                                    System.out.println("Credit card number: ");
+                                    String id = sc.nextLine();
+                                    System.out.println("New year: ");
+                                    int year = sc.nextInt(); sc.nextLine();
+                                    TSM.updateYearCC(id,year);
+                                }else if (ccOp==5){
+                                    System.out.println("<--");
+                                }else{
+                                    System.out.println("Invalid option");
+                                }
                                 break;
                             case 3:
-
+                                System.out.println("\n1- Customer name\n" +
+                                        "2- Customer address\n" +
+                                        "3- Customer email\n" +
+                                        "4- Customer phone\n" +
+                                        "5- Customer credit card\n" +
+                                        "6- Back\n");
+                                int custOp = sc.nextInt(); sc.nextLine();
+                                if (custOp==1){
+                                    TSM.listCustomers();
+                                    System.out.println("Customer id: ");
+                                    int id = sc.nextInt(); sc.nextLine();
+                                    System.out.println("Customer name: ");
+                                    String number = sc.nextLine();
+                                    TSM.updateNameC(id, number);
+                                }else if (custOp==2){
+                                    TSM.listCustomers();
+                                    System.out.println("Customer id: ");
+                                    int id = sc.nextInt(); sc.nextLine();
+                                    System.out.println("Customer address: ");
+                                    String number = sc.nextLine();
+                                    TSM.updateAddressC(id, number);
+                                }else if (custOp==3){
+                                    TSM.listCustomers();
+                                    System.out.println("Customer id: ");
+                                    int id = sc.nextInt(); sc.nextLine();
+                                    System.out.println("Customer email: ");
+                                    String number = sc.nextLine();
+                                    TSM.updateEmailC(id, number);
+                                }else if (custOp==4){
+                                    TSM.listCustomers();
+                                    System.out.println("Customer id: ");
+                                    int id = sc.nextInt(); sc.nextLine();
+                                    System.out.println("Customer phone: ");
+                                    String number = sc.nextLine();
+                                    TSM.updatePhoneC(id, number);
+                                }else if (custOp==5){
+                                    TSM.listCustomers();
+                                    System.out.println("Customer id: ");
+                                    int id = sc.nextInt(); sc.nextLine();
+                                    TSM.changeCreditCardToCustomer(id);
+                                }else if (custOp==6){
+                                    System.out.println("<--");
+                                }else{
+                                    System.out.println("Invalid option");
+                                }
                                 break;
                             case 4:
-
+                                System.out.println("\n1- Order date\n" +
+                                        "2- Delivery date\n" +
+                                        "3- Customer\n" +
+                                        "4- Back\n");
+                                int orderOp = sc.nextInt(); sc.nextLine();
+                                if (orderOp==1){
+                                    TSM.listOrders();
+                                    System.out.println("Order id: ");
+                                    int id = sc.nextInt(); sc.nextLine();
+                                    System.out.println("New order date: ");
+                                    String date = sc.nextLine();
+                                    TSM.updateOrderDate(id, formatter.parse(date));
+                                }else if (orderOp==2){
+                                    TSM.listOrders();
+                                    System.out.println("Order id: ");
+                                    int id = sc.nextInt(); sc.nextLine();
+                                    System.out.println("New delivery date: ");
+                                    String date = sc.nextLine();
+                                    TSM.updateOrderDeliveryDate(id, formatter.parse(date));
+                                }else if (orderOp==3){
+                                    TSM.listOrders();
+                                    System.out.println("Order id: ");
+                                    int id = sc.nextInt(); sc.nextLine();
+                                    TSM.updateOrderCustomer(id);
+                                }else if (orderOp==4){
+                                    System.out.println("<--");
+                                }else{
+                                    System.out.println("Invalid option");
+                                }
                                 break;
                             case 5:
                                 System.out.println("<--");
@@ -432,14 +579,96 @@ public class TShirtsDB4O {
                             default:
                                 System.out.println("Invalid option");
                         }
-						TSM.updatePriceArticle(7, 12.00);
-						TSM.changeCreditCardToCustomer(1);
+//						TSM.updatePriceArticle(7, 12.00);
+//						TSM.changeCreditCardToCustomer(1);
 						break;
 					case 4:
-						TSM.deletingArticlesByName("POLO BÁSICO 'MANIA'");
-						TSM.deleteArticleById(7);
-						TSM.deleteCustomerbyId(2);
-						TSM.deleteOrderContentById_Order(2);
+                        System.out.println("\n1- Article\n" +
+                                "2- CreditCard\n" +
+                                "3- Customer\n" +
+                                "4- Order\n" +
+                                "5- Back <--\n");
+                        int del = sc.nextInt(); sc.nextLine();
+                        switch (del) {
+                            case 1:
+                                System.out.println("\n1- Delete article by id\n" +
+                                        "2- Delete article by name\n" +
+                                        "3- Back <--");
+                                int delA = sc.nextInt(); sc.nextLine();
+                                if (delA==1) {
+                                    TSM.listArticles();
+                                    System.out.println("Article id");
+                                    int delArt = sc.nextInt(); sc.nextLine();
+                                    TSM.deleteArticleById(delArt);
+                                }else if (delA==2){
+                                    TSM.listArticles();
+                                    System.out.println("Article id");
+                                    String delArt = sc.nextLine();
+                                    TSM.deletingArticlesByName(delArt);
+                                }else if (delA==3){
+                                    System.out.println("<--");
+                                }else{
+                                    System.out.println("Invalid option");
+                                }
+                                //TSM.deleteArticleById(7);
+                                //TSM.deletingArticlesByName("POLO BÁSICO 'MANIA'");
+                                break;
+                            case 2:
+                                System.out.println("\n1- Delete credit cards by number\n" +
+                                        "2- Back <--");
+                                int delCC = sc.nextInt(); sc.nextLine();
+                                if (delCC==1) {
+                                    TSM.listCreditCards();
+                                    System.out.println("Credit cards number");
+                                    String cc = sc.nextLine();
+                                    TSM.deleteCreditCard(cc);
+                                }else if (delCC==2){
+                                    System.out.println("<--");
+                                }else{
+                                    System.out.println("Invalid option");
+                                }
+                                break;
+                            case 3:
+                                System.out.println("\nDelete customer by id\n" +
+                                        "2- Back <--");
+                                int delC = sc.nextInt(); sc.nextLine();
+                                if (delC==1) {
+                                    TSM.listCustomers();
+                                    System.out.println("Customer id");
+                                     int idc = sc.nextInt(); sc.nextLine();
+                                    TSM.deleteCustomerbyId(idc);
+                                }else if (delC==2){
+                                    System.out.println("<--");
+                                }else{
+                                    System.out.println("Invalid option");
+                                }
+                                break;
+                            case 4:
+                                System.out.println("\nDelete order by id\n" +
+                                        "2- Back <--");
+                                int delO = sc.nextInt(); sc.nextLine();
+                                if (delO==1) {
+                                    TSM.listOrders();
+                                    System.out.println("Order id");
+                                    int ido = sc.nextInt(); sc.nextLine();
+                                    TSM.deleteOrderContentById_Order(ido);
+                                }else if (delO==2){
+                                    System.out.println("<--");
+                                }else{
+                                    System.out.println("Invalid option");
+                                }
+                                break;
+                            case 5:
+                                System.out.println("Back <--");
+                                break;
+                                default:
+                                    System.out.println("Invalid option");
+
+                            //TSM.deletingArticlesByName("POLO BÁSICO 'MANIA'");
+                            //TSM.deleteArticleById(7);
+                            //TSM.deleteCustomerbyId(2);
+                            //TSM.deleteOrderContentById_Order(2);
+                        }
 						break;
 					case 5:
 						TSM.clearDatabase();
@@ -449,7 +678,7 @@ public class TShirtsDB4O {
 						default:
 							System.out.println( "Invalid option" );
 				}
-			}while (option!=0);
+			}while (option!=0&&option!=5);
 
 			///////////////////////////
 
@@ -496,11 +725,45 @@ public class TShirtsDB4O {
 			customer = result.next();
 		}
 		Customer c = customer;
-		CreditCard creditCard = new CreditCard("lala", "lala", 1, 2);
+        listCreditCards();
+        System.out.println("Credit card number");
+        String cc = sc.nextLine();
+        CreditCard creditCard = lala(cc);
+        //CreditCard creditCard = new CreditCard("lala", "lala", 1, 2);
 		c.setCreditCard(creditCard);
 		db.set(c);
 		System.out.println(db.get(c));
 	}
+
+    public void changeCreditCardToCustomer2(int i) {
+        System.out.println("\nActualizando tarjeta de credito al cliente");
+        ObjectSet<Customer> result = db.queryByExample(new Customer(i, null, null, null, null, null));
+        Customer customer = new Customer();
+        while (result.hasNext()){
+            customer = result.next();
+        }
+        Customer c = customer;
+        System.out.println("Change credit card security number");
+        String sn = sc.nextLine();
+        //CreditCard creditCard = new CreditCard("lala", "lala", 1, 2);
+        c.getCreditCard().setSecurityNumber(sn);
+        db.set(c);
+        System.out.println(db.get(c));
+    }
+
+    /*public void changeCreditCardToCustomer(int i) {
+        System.out.println("\nActualizando tarjeta de credito al cliente");
+        ObjectSet<Customer> result = db.queryByExample(new Customer(i, null, null, null, null, null));
+        Customer customer = new Customer();
+        while (result.hasNext()){
+            customer = result.next();
+        }
+        Customer c = customer;
+        CreditCard creditCard = new CreditCard("lala", "lala", 1, 2);
+        c.setCreditCard(creditCard);
+        db.set(c);
+        System.out.println(db.get(c));
+    }*/
 
 	/**
 	 * Select Article using id and next update price
@@ -519,6 +782,168 @@ public class TShirtsDB4O {
             System.out.println(db.get(article));
         }
 	}
+
+    public void updateNameArticle(int id, String newName) {
+        System.out.println("\nActualizando nombre del articulo");
+        ObjectSet<Article> result = db.queryByExample(new Article(id, null, null, null, 0));
+        while (result.hasNext()){
+            Article article = result.next();
+            article.setName(newName);
+            db.set(article);
+            System.out.println(db.get(article));
+        }
+    }
+
+    public void updateColourArticle(int id, String newColour) {
+        System.out.println("\nActualizando nombre del articulo");
+        ObjectSet<Article> result = db.queryByExample(new Article(id, null, null, null, 0));
+        while (result.hasNext()){
+            Article article = result.next();
+            article.setColour(newColour);
+            db.set(article);
+            System.out.println(db.get(article));
+        }
+    }
+
+    public void updateSizeArticle(int id, String newSize) {
+        System.out.println("\nActualizando nombre del articulo");
+        ObjectSet<Article> result = db.queryByExample(new Article(id, null, null, null, 0));
+        while (result.hasNext()){
+            Article article = result.next();
+            article.setSize(newSize);
+            db.set(article);
+            System.out.println(db.get(article));
+        }
+    }
+
+    public void updateNumberCC(String id, String newN) {
+        System.out.println("\nActualizando numero de la tarjeta de credito");
+        ObjectSet<CreditCard> result = db.queryByExample(new CreditCard(id, null, 0, 0));
+        while (result.hasNext()){
+            CreditCard cc = result.next();
+            cc.setNumber(newN);
+            db.set(cc);
+            System.out.println(db.get(cc));
+        }
+    }
+
+    public void updateSNumberCC(String id, String newN) {
+        System.out.println("\nActualizando numero de seguridad de la tarjeta de credito");
+        ObjectSet<CreditCard> result = db.queryByExample(new CreditCard(id, null, 0, 0));
+        while (result.hasNext()){
+            CreditCard cc = result.next();
+            cc.setSecurityNumber(newN);
+            db.set(cc);
+            System.out.println(db.get(cc));
+        }
+    }
+
+    public void updateMonthCC(String id, int newN) {
+        System.out.println("\nActualizando numero de seguridad de la tarjeta de credito");
+        ObjectSet<CreditCard> result = db.queryByExample(new CreditCard(id, null, 0, 0));
+        while (result.hasNext()){
+            CreditCard cc = result.next();
+            cc.setLastMonth(newN);
+            db.set(cc);
+            System.out.println(db.get(cc));
+        }
+    }
+
+    public void updateYearCC(String id, int newN) {
+        System.out.println("\nActualizando numero de seguridad de la tarjeta de credito");
+        ObjectSet<CreditCard> result = db.queryByExample(new CreditCard(id, null, 0, 0));
+        while (result.hasNext()){
+            CreditCard cc = result.next();
+            cc.setLastYear(newN);
+            db.set(cc);
+            System.out.println(db.get(cc));
+        }
+    }
+
+    public void updateNameC(int id, String newName) {
+        System.out.println("\nActualizando nombre");
+        ObjectSet<Customer> result = db.queryByExample(new Customer(id, null, null, null, null, null));
+        while (result.hasNext()){
+            Customer c = result.next();
+            c.setName(newName);
+            db.set(c);
+            System.out.println(db.get(c));
+        }
+    }
+
+    public void updateAddressC(int id, String newName) {
+        System.out.println("\nActualizando nombre");
+        ObjectSet<Customer> result = db.queryByExample(new Customer(id, null, null, null, null, null));
+        while (result.hasNext()){
+            Customer c = result.next();
+            c.setAddress(newName);
+            db.set(c);
+            System.out.println(db.get(c));
+        }
+    }
+
+    public void updateEmailC(int id, String newName) {
+        System.out.println("\nActualizando nombre");
+        ObjectSet<Customer> result = db.queryByExample(new Customer(id, null, null, null, null, null));
+        while (result.hasNext()){
+            Customer c = result.next();
+            c.setEmail(newName);
+            db.set(c);
+            System.out.println(db.get(c));
+        }
+    }
+
+    public void updatePhoneC(int id, String newName) {
+        System.out.println("\nActualizando nombre");
+        ObjectSet<Customer> result = db.queryByExample(new Customer(id, null, null, null, null, null));
+        while (result.hasNext()){
+            Customer c = result.next();
+            c.setPhone(newName);
+            db.set(c);
+            System.out.println(db.get(c));
+        }
+    }
+
+    public void updateOrderDate(int id, Date newD) {
+        System.out.println("\nActualizando nombre");
+        ObjectSet<Order> result = db.queryByExample(new Order(id, null, null, null, null));
+        while (result.hasNext()){
+            Order c = result.next();
+            c.setOrderDate(newD);
+            db.set(c);
+            System.out.println(db.get(c));
+        }
+    }
+
+    public void updateOrderDeliveryDate(int id, Date newD) {
+        System.out.println("\nActualizando nombre");
+        ObjectSet<Order> result = db.queryByExample(new Order(id, null, null, null, null));
+        while (result.hasNext()){
+            Order c = result.next();
+            c.setDeliveryDate(newD);
+            db.set(c);
+            System.out.println(db.get(c));
+        }
+    }
+
+    public void updateOrderCustomer(int id) {
+        System.out.println("\nActualizando nombre");
+        Order o = null;
+        ObjectSet<Order> result = db.queryByExample(new Order(id, null, null, null, null));
+        while (result.hasNext()){
+            o = result.next();
+        }
+
+        listCustomers();
+
+        System.out.println("Customer id: ");
+        int idC = sc.nextInt(); sc.nextLine();
+
+        Customer cust = returnCustomersId(idC);
+        o.setCustomer(cust);
+        db.set(o);
+        System.out.println(db.get(o));
+    }
 
 	/**
 	 * Add a new article into database
@@ -714,6 +1139,17 @@ public class TShirtsDB4O {
 
 	}
 
+    public void deleteCreditCard(String string) {
+        ObjectSet<CreditCard> result = db.queryByExample(new CreditCard(string, null, 0, 0));
+        System.out.println("\nEliminando tarjeta de credito: "+result.size());
+        while (result.hasNext()){
+            CreditCard cc = result.next();
+            System.out.println(cc);
+            db.delete(cc);
+        }
+
+    }
+
 	/** Method to list Articles from the database using their name */
 	public void llistaArticlesByName(String string) {
         List<Article> articles = db.query(new com.db4o.query.Predicate<Article>() {
@@ -768,7 +1204,6 @@ public class TShirtsDB4O {
 		while (result.hasNext()){
 			System.out.println(result.next());
 		}
-
 	}
 
 	public Article llistaArticlesById2(int i) {
@@ -890,6 +1325,15 @@ public class TShirtsDB4O {
 			System.out.println(result.next());
 		}
 	}
+
+    public Customer returnCustomersId(int s) {
+        ObjectSet<Customer> result = db.queryByExample(new Customer(s, null, null, null, null, null));
+        System.out.println(result.size());
+        while (result.hasNext()) {
+            return result.next();
+        }
+        return null;
+    }
 
 	public void addOrderDetail(int s, Set<OrderDetail> orderDetails) {
 		ObjectSet<Order> result = db.queryByExample(new Order(s, null, null, null, null));
