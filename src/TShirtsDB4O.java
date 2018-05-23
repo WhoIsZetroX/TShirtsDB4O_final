@@ -999,6 +999,15 @@ public class TShirtsDB4O {
 		}
 	}
 
+	public void deleteCreditCardFromCustomerByIdCustomer(int i) {
+		ObjectSet<Customer> result = db.queryByExample(new Customer(i, null, null, null, null, null));
+		while (result.hasNext()){
+			Customer customer =result.next();
+			customer.setCreditCard(null);
+			db.store(customer);
+		}
+	}
+
 	/**
 	 * Delete Order and its orderdetails using idOrder
 	 * 
