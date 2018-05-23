@@ -8,11 +8,6 @@ import Entities.*;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
-import com.db4o.query.Constraint;
-import com.db4o.query.Query;
-import javafx.beans.binding.IntegerBinding;
-
-import javax.print.attribute.standard.MediaSize;
 
 /**
  * @author Joan Anton Perez Branya
@@ -728,8 +723,8 @@ public class TShirtsDB4O {
         listCreditCards();
         System.out.println("Credit card number");
         String cc = sc.nextLine();
-        CreditCard creditCard = lala(cc);
-        //CreditCard creditCard = new CreditCard("lala", "lala", 1, 2);
+        CreditCard creditCard = searchCreditCard(cc);
+        //CreditCard creditCard = new CreditCard("searchCreditCard", "searchCreditCard", 1, 2);
 		c.setCreditCard(creditCard);
 		db.set(c);
 		System.out.println(db.get(c));
@@ -745,7 +740,7 @@ public class TShirtsDB4O {
         Customer c = customer;
         System.out.println("Change credit card security number");
         String sn = sc.nextLine();
-        //CreditCard creditCard = new CreditCard("lala", "lala", 1, 2);
+        //CreditCard creditCard = new CreditCard("searchCreditCard", "searchCreditCard", 1, 2);
         c.getCreditCard().setSecurityNumber(sn);
         db.set(c);
         System.out.println(db.get(c));
@@ -759,7 +754,7 @@ public class TShirtsDB4O {
             customer = result.next();
         }
         Customer c = customer;
-        CreditCard creditCard = new CreditCard("lala", "lala", 1, 2);
+        CreditCard creditCard = new CreditCard("searchCreditCard", "searchCreditCard", 1, 2);
         c.setCreditCard(creditCard);
         db.set(c);
         System.out.println(db.get(c));
@@ -975,7 +970,7 @@ public class TShirtsDB4O {
 
 	public void addCustomer(int idCustomer, String name, String address, String email, String phone, String creditCard) {
 		System.out.println("\nAdding customer...");
-		CreditCard creditCardo = lala(creditCard);
+		CreditCard creditCardo = searchCreditCard(creditCard);
 		Customer customer = new Customer(idCustomer, name, address, email, phone, creditCardo);
 		db.store(customer);
 		System.out.println(db.get(customer));
@@ -1227,13 +1222,22 @@ public class TShirtsDB4O {
 		}
 	}
 
-	public CreditCard lala(String s) {
+	public CreditCard searchCreditCard(String s) {
 		ObjectSet<CreditCard> result = db.queryByExample(new CreditCard(s, null, 0, 0));
 		while (result.hasNext()){
 			return result.next();
 		}
 		return null;
 	}
+
+    /*public CreditCard searchCreditCard(String s) {
+        ObjectSet<CreditCard> result = db.queryByExample(new CreditCard(s, null, 0, 0));
+        while (result.hasNext()){
+            CreditCard cc = result.next();
+            if (cc.getNumber().equals(s)) return result.next();
+        }
+        return null;
+    }*/
 
 	public Customer lolo(int s) {
 		ObjectSet<Customer> result = db.queryByExample(new Customer(s, null, null, null, null, null));
@@ -1365,7 +1369,7 @@ public class TShirtsDB4O {
             customer = result.next();
         }
         Customer c = customer;
-        CreditCard creditCard = new CreditCard("lala", "lala", 1, 2);
+        CreditCard creditCard = new CreditCard("searchCreditCard", "searchCreditCard", 1, 2);
         c.setCreditCard(creditCard);
         db.set(c);
         System.out.println(db.get(c));*/
